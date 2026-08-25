@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Augusto Pimenta | Fotografia e Vídeo</title>
+  <meta name="description" content="Portfólio fotográfico e audiovisual de Augusto Pimenta. Cultura, comercial, vídeos, edição e making of." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="#home">Augusto Pimenta</a>
+
+    <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="menu" class="menu">
+      <a href="#sobre">Sobre</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#videos">Vídeos</a>
+      <a href="#edicoes">Edição de vídeo</a>
+      <a href="#makingof">Making of</a>
+      <a href="#feedbacks">Feedbacks</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Fotografia • Vídeo • Cultura • Comercial • Edição de vídeo</p>
+        <h1>Imagem com presença, ritmo e intenção.</h1>
+        <p class="hero-text">Portfólio cinematográfico e profissional, pensado para destacar trabalhos e facilitar futuras atualizações pelo painel.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-light wa" href="https://wa.me/5528999917734" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a class="btn btn-outline" href="#projetos">Ver projetos</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="foto.augusto.jpg" alt="Foto de Augusto Pimenta" />
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Sobre</p>
+        <h2>Profissional, direto e visual.</h2>
+      </div>
+
+      <div class="about-grid">
+        <article class="card">
+          <h3>Resumo rápido</h3>
+          <p>Fotógrafo e produtor audiovisual com atuação em fotografia, documentários, filmes institucionais e produções comerciais.</p>
+        </article>
+
+        <article class="card">
+          <h3>Sobre mim</h3>
+          <p>Sou movido pela criação de imagens que transmitam significado. Gosto de trabalhar de forma próxima, entendendo a identidade de cada projeto para construir narrativas visuais autênticas, sempre com atenção aos detalhes e à qualidade do resultado.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="projetos" class="section">
+      <div class="section-head section-head-row">
+        <div>
+          <p class="eyebrow">Projetos</p>
+          <h2>Cultura, Comercial e mais</h2>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filtros de projetos">
+          <button class="filter is-active" data-filter="all">Todos</button>
+          <button class="filter" data-filter="cultura">Cultura</button>
+          <button class="filter" data-filter="comercial">Comercial</button>
+          <button class="filter" data-filter="evento">Evento</button>
+          <button class="filter" data-filter="teatro">Teatro</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        <a class="project-card" href="project.html?slug=forro-bobo" data-category="cultura">
+          <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80" alt="Forró Bobó" />
+          <div class="project-info">
+            <p class="tag">Cultura</p>
+            <h3>Forró Bobó</h3>
+            <p>Documentário e registros com pegada cinematográfica.</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="project.html?slug=terra-que-acaba" data-category="teatro">
+          <img src="https://images.unsplash.com/photo-1524156868115-79b14d7f0b91?auto=format&fit=crop&w=1200&q=80" alt="Terra que acaba" />
+          <div class="project-info">
+            <p class="tag">Teatro</p>
+            <h3>Terra que acaba</h3>
+            <p>Projeto autoral com leitura visual forte e expressiva.</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="project.html?slug=marca-em-movimento" data-category="comercial">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80" alt="Marca em movimento" />
+          <div class="project-info">
+            <p class="tag">Comercial</p>
+            <h3>Marca em movimento</h3>
+            <p>Visual limpo, forte e preparado para conversão.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="videos" class="section">
+      <div class="section-head section-head-row">
+        <div>
+          <p class="eyebrow">Vídeos</p>
+          <h2>Vídeos em destaque</h2>
+        </div>
+      </div>
+
+      <div class="video-carousel">
+        <button class="video-arrow left" type="button" id="videoPrev" aria-label="Voltar vídeos">←</button>
+        <div class="video-track-wrap">
+          <div class="video-track" id="videoTrack">
+            <a class="project-card video-card" href="https://youtu.be/WD3w-1dQuoA" target="_blank" rel="noreferrer">
+              <img src="https://img.youtube.com/vi/WD3w-1dQuoA/hqdefault.jpg" alt="Férias de Julho" />
+              <div class="video-overlay"><h3>Férias de Julho</h3></div>
+            </a>
+
+            <a class="project-card video-card" href="https://youtu.be/OOGsvqQ-H4w?si=4fK2tOKCYZoeCIQC" target="_blank" rel="noreferrer">
+              <img src="https://img.youtube.com/vi/OOGsvqQ-H4w/hqdefault.jpg" alt="Forró Bobó" />
+              <div class="video-overlay"><h3>Forró Bobó</h3></div>
+            </a>
+
+            <a class="project-card video-card" href="https://youtu.be/9oPBznXBzd4?si=zll8o-Bt9WkktWnS" target="_blank" rel="noreferrer">
+              <img src="https://img.youtube.com/vi/9oPBznXBzd4/hqdefault.jpg" alt="Grêmio Feminicídio" />
+              <div class="video-overlay"><h3>Grêmio Feminicídio</h3></div>
+            </a>
+          </div>
+        </div>
+        <button class="video-arrow right" type="button" id="videoNext" aria-label="Avançar vídeos">→</button>
+      </div>
+    </section>
+
+    <section id="edicoes" class="section">
+      <div class="section-head section-head-row">
+        <div>
+          <p class="eyebrow">Edição de vídeo</p>
+          <h2>Montagem e pós-produção</h2>
+        </div>
+      </div>
+
+      <div class="video-carousel">
+        <button class="video-arrow left" type="button" id="editPrev" aria-label="Voltar edições">←</button>
+        <div class="video-track-wrap">
+          <div class="video-track" id="editTrack">
+            <a class="project-card video-card"
+               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_1"
+               target="_blank"
+               rel="noopener noreferrer">
+              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_1/hqdefault.jpg" alt="Edição de vídeo 1" />
+              <div class="video-overlay">
+                <h3>Edição de vídeo 1</h3>
+              </div>
+            </a>
+
+            <a class="project-card video-card"
+               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_2"
+               target="_blank"
+               rel="noopener noreferrer">
+              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_2/hqdefault.jpg" alt="Edição de vídeo 2" />
+              <div class="video-overlay">
+                <h3>Edição de vídeo 2</h3>
+              </div>
+            </a>
+
+            <a class="project-card video-card"
+               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_3"
+               target="_blank"
+               rel="noopener noreferrer">
+              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_3/hqdefault.jpg" alt="Edição de vídeo 3" />
+              <div class="video-overlay">
+                <h3>Edição de vídeo 3</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+        <button class="video-arrow right" type="button" id="editNext" aria-label="Avançar edições">→</button>
+      </div>
+    </section>
+
+    <section id="makingof" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Making of</p>
+        <h2>Bastidores e set</h2>
+      </div>
+
+      <div class="projects-grid">
+        <a class="project-card" href="making-of.html?slug=forro-bobo">
+          <img src="https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?auto=format&fit=crop&w=1000&q=80" alt="Making of Forró Bobó" />
+          <div class="project-info">
+            <p class="tag">Making of</p>
+            <h3>Forró Bobó</h3>
+            <p>Bastidores do projeto.</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="making-of.html?slug=terra-que-acaba">
+          <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1000&q=80" alt="Making of Terra que acaba" />
+          <div class="project-info">
+            <p class="tag">Making of</p>
+            <h3>Terra que acaba</h3>
+            <p>Processo e set.</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="making-of.html?slug=marca-em-movimento">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80" alt="Making of Marca em movimento" />
+          <div class="project-info">
+            <p class="tag">Making of</p>
+            <h3>Marca em movimento</h3>
+            <p>Captação e direção.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="feedbacks" class="section">
+      <div class="section-head">
+        <p class="eyebrow">Feedbacks</p>
+        <h2>Deixe sua mensagem</h2>
+      </div>
+
+      <form class="feedback-form" id="feedbackForm">
+        <input type="text" name="name" placeholder="Seu nome ou anônimo" required />
+        <textarea name="message" placeholder="Escreva seu feedback" required></textarea>
+        <button type="submit">Enviar feedback</button>
+        <p id="feedbackStatus" class="feedback-status"></p>
+      </form>
+    </section>
+
+    <section id="contato" class="section contact-section">
+      <div class="contact-card">
+        <p class="eyebrow">Contato</p>
+        <h3>Vamos conversar.</h3>
+        <div class="contact-links">
+          <a class="wa" href="https://wa.me/5528999917734" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a class="yt" href="https://youtube.com/@oaugustopimenta?si=_Ea7dJoPPsUGE8cD" target="_blank" rel="noreferrer">YouTube</a>
+          <a class="ig" href="https://www.instagram.com/augustopfotos?igsh=a29ldHF5aHIzNDR5" target="_blank" rel="noreferrer">Instagram</a>
+          <a class="mail" href="mailto:oaugustopimenta@gmail.com">E-mail</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Augusto Pimenta</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

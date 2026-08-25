@@ -1,0 +1,64 @@
+backend:
+  name: github
+  repo: SEUUSUARIO/SEUREPOSITORIO
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Páginas"
+    files:
+      - file: "content/pages/sobre.md"
+        label: "Sobre"
+        name: "sobre"
+        fields:
+          - { label: "Título da seção", name: "title", widget: "string" }
+          - { label: "Resumo rápido", name: "resume", widget: "text" }
+          - { label: "Sobre mim", name: "about", widget: "text" }
+
+  - name: "projects"
+    label: "Projetos"
+    folder: "content/projects/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["cultura", "comercial", "evento", "teatro"] }
+      - { label: "Descrição", name: "description", widget: "text" }
+      - { label: "Capa", name: "cover", widget: "image" }
+      - { label: "Galeria", name: "gallery", widget: "list", field: { label: "Imagem", name: "image", widget: "image" } }
+
+  - name: "makingof"
+    label: "Making of"
+    folder: "content/projects/makingof"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "text" }
+      - { label: "Capa", name: "cover", widget: "image" }
+      - { label: "Galeria", name: "gallery", widget: "list", field: { label: "Imagem", name: "image", widget: "image" } }
+
+  - name: "videos"
+    label: "Vídeos"
+    folder: "content/projects/videos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "text", required: false }
+      - { label: "Capa", name: "cover", widget: "image" }
+      - { label: "Link do vídeo", name: "url", widget: "string" }
+
+  - name: "edicoes"
+    label: "Edição de vídeo"
+    folder: "content/projects/edicoes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "text", required: false }
+      - { label: "Capa", name: "cover", widget: "image" }
+      - { label: "Link", name: "url", widget: "string" }
