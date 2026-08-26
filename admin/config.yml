@@ -1,7 +1,7 @@
 backend:
   name: github
-repo: beatrizgabriel/augusto-pimenta-site
-branch: main
+  repo: beatrizgabriel/augusto-pimenta-site
+  branch: main
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
