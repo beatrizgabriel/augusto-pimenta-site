@@ -1,20 +1,5 @@
-const filterButtons = document.querySelectorAll(".filter");
-const cards = document.querySelectorAll(".project-card[data-category]");
 const menuBtn = document.querySelector(".menu-btn");
 const menu = document.querySelector(".menu");
-
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach((btn) => btn.classList.remove("is-active"));
-    button.classList.add("is-active");
-
-    const filter = button.dataset.filter;
-    cards.forEach((card) => {
-      const match = filter === "all" || card.dataset.category === filter;
-      card.classList.toggle("hidden", !match);
-    });
-  });
-});
 
 if (menuBtn && menu) {
   menuBtn.addEventListener("click", () => {
@@ -58,32 +43,57 @@ function parseFrontmatter(markdown) {
   if (!match) return {};
 
   const data = {};
+  let activeListKey = null;
+
   match[1].split(/\r?\n/).forEach((line) => {
+    const listItem = line.match(/^\s*-\s+(.+)$/);
+    if (listItem && activeListKey) {
+      data[activeListKey].push(cleanValue(listItem[1]));
+      return;
+    }
+
     const separator = line.indexOf(":");
     if (separator === -1) return;
 
     const key = line.slice(0, separator).trim();
-    let value = line.slice(separator + 1).trim();
+    const rawValue = line.slice(separator + 1).trim();
+    activeListKey = null;
 
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
+    if (!rawValue) {
+      data[key] = [];
+      activeListKey = key;
+      return;
     }
 
-    data[key] = value;
+    if (rawValue.startsWith("[") && rawValue.endsWith("]")) {
+      data[key] = rawValue
+        .slice(1, -1)
+        .split(",")
+        .map((value) => cleanValue(value))
+        .filter(Boolean);
+    } else {
+      data[key] = cleanValue(rawValue);
+    }
   });
 
   return data;
+}
+
+function cleanValue(value) {
+  const cleaned = String(value).trim();
+  if (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    return cleaned.slice(1, -1);
+  }
+  return cleaned;
 }
 
 function resolveAssetUrl(assetPath) {
   if (!assetPath) return "";
   if (/^https?:\/\//i.test(assetPath)) return assetPath;
 
-  // O site Netlify é servido na raiz do domínio.
-  // A alternativa mantém compatibilidade com o endereço antigo do GitHub Pages.
   const githubPagesBase = window.location.hostname.endsWith("github.io")
     ? "/augusto-pimenta-site"
     : "";
@@ -110,6 +120,100 @@ function getYouTubeThumbnail(videoUrl) {
   }
 
   return "";
+}
+
+function applyProjectFilter() {
+  const activeFilter = document.querySelector(".filter.is-active")?.dataset.filter || "all";
+
+  document.querySelectorAll(".project-card[data-category]").forEach((card) => {
+    const matches = activeFilter === "all" || card.dataset.category === activeFilter;
+    card.classList.toggle("hidden", !matches);
+  });
+}
+
+document.querySelectorAll(".filter").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach((btn) => btn.classList.remove("is-active"));
+    button.classList.add("is-active");
+    applyProjectFilter();
+  });
+});
+
+function createCmsProjectCard(project, slug) {
+  const card = document.createElement("a");
+  card.className = "project-card cms-project-card";
+  card.href = `project.html?slug=${encodeURIComponent(slug)}`;
+  card.dataset.category = project.category || "";
+
+  const image = document.createElement("img");
+  image.src = resolveAssetUrl(project.cover);
+  image.alt = project.title;
+
+  const info = document.createElement("div");
+  info.className = "project-info";
+
+  const tag = document.createElement("p");
+  tag.className = "tag";
+  tag.textContent = project.category || "Projeto";
+
+  const title = document.createElement("h3");
+  title.textContent = project.title;
+
+  const description = document.createElement("p");
+  description.textContent = project.description || "";
+
+  info.appendChild(tag);
+  info.appendChild(title);
+  info.appendChild(description);
+  card.appendChild(image);
+  card.appendChild(info);
+
+  return card;
+}
+
+async function loadCmsProjects() {
+  const grid = document.getElementById("projectsGrid");
+  if (!grid) return;
+
+  const apiUrl = "https://api.github.com/repos/beatrizgabriel/augusto-pimenta-site/contents/content/projects/projects?ref=main";
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { Accept: "application/vnd.github+json" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API respondeu ${response.status}`);
+    }
+
+    const files = await response.json();
+    const markdownFiles = files.filter(
+      (file) => file.type === "file" && file.name.toLowerCase().endsWith(".md")
+    );
+
+    const projects = await Promise.all(
+      markdownFiles.map(async (file) => {
+        const markdownResponse = await fetch(file.download_url);
+        if (!markdownResponse.ok) return null;
+
+        const markdown = await markdownResponse.text();
+        return {
+          slug: file.name.replace(/\.md$/i, ""),
+          data: parseFrontmatter(markdown),
+        };
+      })
+    );
+
+    projects
+      .filter((project) => project?.data?.title && project.data.cover)
+      .forEach((project) => {
+        grid.appendChild(createCmsProjectCard(project.data, project.slug));
+      });
+
+    applyProjectFilter();
+  } catch (error) {
+    console.error("Não foi possível carregar os projetos do CMS:", error);
+  }
 }
 
 function createCmsVideoCard(video) {
@@ -183,7 +287,6 @@ function setupCarousel(trackId, prevId, nextId) {
 
   if (!track || !prev || !next) return;
 
-  const items = Array.from(track.children);
   let currentPage = 0;
   let itemsPerPage = 3;
 
@@ -195,7 +298,9 @@ function setupCarousel(trackId, prevId, nextId) {
   }
 
   function update() {
+    const items = Array.from(track.children);
     calculateItemsPerPage();
+
     const totalPages = Math.max(0, Math.ceil(items.length / itemsPerPage) - 1);
     currentPage = Math.min(currentPage, totalPages);
 
@@ -205,7 +310,6 @@ function setupCarousel(trackId, prevId, nextId) {
     const step = currentPage * (itemsPerPage * cardWidth + itemsPerPage * gap);
 
     track.style.transform = `translateX(-${step}px)`;
-
     prev.classList.toggle("is-hidden", currentPage <= 0);
     next.classList.toggle("is-hidden", currentPage >= totalPages);
   }
@@ -218,6 +322,7 @@ function setupCarousel(trackId, prevId, nextId) {
   });
 
   next.addEventListener("click", () => {
+    const items = Array.from(track.children);
     const totalPages = Math.max(0, Math.ceil(items.length / itemsPerPage) - 1);
     if (currentPage < totalPages) {
       currentPage++;
@@ -229,7 +334,7 @@ function setupCarousel(trackId, prevId, nextId) {
   update();
 }
 
-loadCmsVideos().finally(() => {
+Promise.all([loadCmsProjects(), loadCmsVideos()]).finally(() => {
   setupCarousel("videoTrack", "videoPrev", "videoNext");
   setupCarousel("editTrack", "editPrev", "editNext");
 });
