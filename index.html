@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Augusto Pimenta | Fotografia e Vídeo</title>
@@ -263,5 +265,19 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+  if (window.netlifyIdentity ) {
+    window.netlifyIdentity.on("init", function (user) {
+      if (!user) {
+        window.netlifyIdentity.on("login", function () {
+          window.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+
+
 </body>
 </html>
