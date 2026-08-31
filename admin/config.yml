@@ -25,8 +25,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Categoria", name: "category", widget: "select", options: ["cultura", "comercial", "evento", "teatro"] }
-      - { label: "Descrição", name: "description", widget: "text" }
+-  { label: "Categoria", name: "category", widget: "select", options: ["cultura", "comercial", "evento"] }      - { label: "Descrição", name: "description", widget: "text" }
       - { label: "Capa", name: "cover", widget: "image" }
       - { label: "Galeria", name: "gallery", widget: "list", field: { label: "Imagem", name: "image", widget: "image" } }
 
