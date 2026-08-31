@@ -73,12 +73,19 @@ function makeProjectData(data) {
   const images = [];
 
   if (data.cover) {
-    images.push({ src: resolveAssetUrl(data.cover), size: "l" });
+    images.push({
+      src: resolveAssetUrl(data.cover),
+      size: "l"
+    });
   }
 
-  gallery.forEach((image, index) => {
+  gallery.forEach((item, index) => {
+    const imagePath = typeof item === "string" ? item : item?.image;
+
+    if (!imagePath) return;
+
     images.push({
-      src: resolveAssetUrl(image),
+      src: resolveAssetUrl(imagePath),
       size: index % 2 === 0 ? "m" : "s"
     });
   });
@@ -89,6 +96,13 @@ function makeProjectData(data) {
     images
   };
 }
+
+  return {
+    title: data.title,
+    description: data.description || "",
+    images
+  };
+
 
 function renderProject(data) {
   document.getElementById("projectTitle").textContent = data.title;
