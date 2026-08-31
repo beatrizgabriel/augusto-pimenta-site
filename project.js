@@ -1,35 +1,11 @@
-const fallbackProjects = {
-  "forro-bobo": {
-    title: "Forró Bobó",
-    description: "Documentário e registros com pegada cinematográfica.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1524863479829-916d8e77f114?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  },
-  "terra-que-acaba": {
-    title: "Terra que acaba",
-    description: "Projeto autoral com leitura visual forte e expressiva.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1524156868115-79b14d7f0b91?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  },
-  "marca-em-movimento": {
-    title: "Marca em movimento",
-    description: "Visual limpo, forte e preparado para conversão.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  }
-};
-
 const params = new URLSearchParams(window.location.search);
-const slug = params.get("slug") || "forro-bobo";
+const slug = params.get("slug");
+
+// Fallback se não tiver slug
+if (!slug) {
+  window.location.href = "index.html#projetos";
+  return;
+}
 
 function cleanValue(value) {
   const cleaned = String(value).trim();
@@ -52,6 +28,7 @@ function parseFrontmatter(markdown) {
   match[1].split(/\r?\n/).forEach((line) => {
     const listItem = line.match(/^\s*-\s+(.+)$/);
     if (listItem && activeListKey) {
+      if (!data[activeListKey]) data[activeListKey] = [];
       data[activeListKey].push(cleanValue(listItem[1]));
       return;
     }
@@ -128,7 +105,6 @@ function renderProject(data) {
 }
 
 async function loadProject() {
-  const fallback = fallbackProjects[slug] || fallbackProjects["forro-bobo"];
   const rawUrl = `https://raw.githubusercontent.com/beatrizgabriel/augusto-pimenta-site/main/content/projects/projects/${encodeURIComponent(slug)}.md`;
 
   try {
@@ -143,10 +119,11 @@ async function loadProject() {
       return;
     }
   } catch (error) {
-    console.warn("Usando projeto estático de reserva:", error);
+    console.error("Erro ao carregar projeto:", error);
   }
 
-  renderProject(fallback);
+  document.getElementById("projectTitle").textContent = "Projeto não encontrado";
+  document.getElementById("projectDescription").textContent = "";
 }
 
 loadProject();

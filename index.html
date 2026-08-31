@@ -88,7 +88,7 @@
       </div>
 
       <div class="projects-grid" id="projectsGrid">
-
+        <!-- Projetos carregados via CMS -->
       </div>
     </section>
 
@@ -104,20 +104,7 @@
         <button class="video-arrow left" type="button" id="videoPrev" aria-label="Voltar vídeos">←</button>
         <div class="video-track-wrap">
           <div class="video-track" id="videoTrack">
-            <a class="project-card video-card" href="https://youtu.be/WD3w-1dQuoA" target="_blank" rel="noreferrer">
-              <img src="https://img.youtube.com/vi/WD3w-1dQuoA/hqdefault.jpg" alt="Férias de Julho" />
-              <div class="video-overlay"><h3>Férias de Julho</h3></div>
-            </a>
-
-            <a class="project-card video-card" href="https://youtu.be/OOGsvqQ-H4w?si=4fK2tOKCYZoeCIQC" target="_blank" rel="noreferrer">
-              <img src="https://img.youtube.com/vi/OOGsvqQ-H4w/hqdefault.jpg" alt="Forró Bobó" />
-              <div class="video-overlay"><h3>Forró Bobó</h3></div>
-            </a>
-
-            <a class="project-card video-card" href="https://youtu.be/9oPBznXBzd4?si=zll8o-Bt9WkktWnS" target="_blank" rel="noreferrer">
-              <img src="https://img.youtube.com/vi/9oPBznXBzd4/hqdefault.jpg" alt="Grêmio Feminicídio" />
-              <div class="video-overlay"><h3>Grêmio Feminicídio</h3></div>
-            </a>
+            <!-- Vídeos carregados via CMS -->
           </div>
         </div>
         <button class="video-arrow right" type="button" id="videoNext" aria-label="Avançar vídeos">→</button>
@@ -136,35 +123,7 @@
         <button class="video-arrow left" type="button" id="editPrev" aria-label="Voltar edições">←</button>
         <div class="video-track-wrap">
           <div class="video-track" id="editTrack">
-            <a class="project-card video-card"
-               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_1"
-               target="_blank"
-               rel="noopener noreferrer">
-              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_1/hqdefault.jpg" alt="Edição de vídeo 1" />
-              <div class="video-overlay">
-                <h3>Edição de vídeo 1</h3>
-              </div>
-            </a>
-
-            <a class="project-card video-card"
-               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_2"
-               target="_blank"
-               rel="noopener noreferrer">
-              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_2/hqdefault.jpg" alt="Edição de vídeo 2" />
-              <div class="video-overlay">
-                <h3>Edição de vídeo 2</h3>
-              </div>
-            </a>
-
-            <a class="project-card video-card"
-               href="https://www.youtube.com/watch?v=ID_DO_VIDEO_3"
-               target="_blank"
-               rel="noopener noreferrer">
-              <img src="https://img.youtube.com/vi/ID_DO_VIDEO_3/hqdefault.jpg" alt="Edição de vídeo 3" />
-              <div class="video-overlay">
-                <h3>Edição de vídeo 3</h3>
-              </div>
-            </a>
+            <!-- Edições carregadas via CMS -->
           </div>
         </div>
         <button class="video-arrow right" type="button" id="editNext" aria-label="Avançar edições">→</button>
@@ -177,33 +136,8 @@
         <h2>Bastidores e set</h2>
       </div>
 
-      <div class="projects-grid">
-        <a class="project-card" href="making-of.html?slug=forro-bobo">
-          <img src="https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?auto=format&fit=crop&w=1000&q=80" alt="Making of Forró Bobó" />
-          <div class="project-info">
-            <p class="tag">Making of</p>
-            <h3>Forró Bobó</h3>
-            <p>Bastidores do projeto.</p>
-          </div>
-        </a>
-
-        <a class="project-card" href="making-of.html?slug=terra-que-acaba">
-          <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1000&q=80" alt="Making of Terra que acaba" />
-          <div class="project-info">
-            <p class="tag">Making of</p>
-            <h3>Terra que acaba</h3>
-            <p>Processo e set.</p>
-          </div>
-        </a>
-
-        <a class="project-card" href="making-of.html?slug=marca-em-movimento">
-          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1000&q=80" alt="Making of Marca em movimento" />
-          <div class="project-info">
-            <p class="tag">Making of</p>
-            <h3>Marca em movimento</h3>
-            <p>Captação e direção.</p>
-          </div>
-        </a>
+      <div class="projects-grid" id="makingofGrid">
+        <!-- Making of carregado via CMS -->
       </div>
     </section>
 
@@ -242,7 +176,7 @@
   <script src="script.js"></script>
 
   <script>
-  if (window.netlifyIdentity ) {
+  if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", function (user) {
       if (!user) {
         window.netlifyIdentity.on("login", function () {
@@ -252,7 +186,6 @@
     });
   }
 </script>
-
 
 </body>
 </html>

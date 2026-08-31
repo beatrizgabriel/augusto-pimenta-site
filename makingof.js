@@ -1,39 +1,116 @@
-const making = {
-  "forro-bobo": {
-    title: "Forró Bobó",
-    description: "Bastidores do projeto em captação e set.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  },
-  "terra-que-acaba": {
-    title: "Terra que acaba",
-    description: "Making of do processo visual e encenação.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1524156868115-79b14d7f0b91?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  },
-  "marca-em-movimento": {
-    title: "Marca em movimento",
-    description: "Bastidores de direção, luz e produto.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80", size: "l" },
-      { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80", size: "m" },
-      { src: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80", size: "s" }
-    ]
-  }
-};
-
+// Carrega making of diretamente do CMS
 const params = new URLSearchParams(window.location.search);
-const slug = params.get("slug") || "forro-bobo";
-const data = making[slug] || making["forro-bobo"];
+const slug = params.get("slug");
 
-document.getElementById("makingTitle").textContent = data.title;
-document.getElementById("makingDescription").textContent = data.description;
+// Fallback se não tiver slug
+if (!slug) {
+  window.location.href = "index.html#makingof";
+  return;
+}
 
-const gallery = document.getElementById("makingGallery");
-gallery.innerHTML = data.images.map((item, i) => `<article class="gallery-item ${item.size || "s"}"><img src="${item.src}" alt="Making of ${data.title} ${i + 1}"></article>`).join("");
+async function loadMakingOf() {
+  const apiUrl = `https://api.github.com/repos/beatrizgabriel/augusto-pimenta-site/contents/content/projects/makingof?ref=main`;
+  
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { Accept: "application/vnd.github+json" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API respondeu ${response.status}`);
+    }
+
+    const files = await response.json();
+    const markdownFiles = files.filter(
+      (file) => file.type === "file" && file.name.toLowerCase().endsWith(".md")
+    );
+
+    const makingOfs = await Promise.all(
+      markdownFiles.map(async (file) => {
+        const markdownResponse = await fetch(file.download_url);
+        if (!markdownResponse.ok) return null;
+
+        const markdown = await markdownResponse.text();
+        return {
+          slug: file.name.replace(/\.md$/i, ""),
+          data: parseFrontmatter(markdown),
+        };
+      })
+    );
+
+    const currentMakingOf = makingOfs.find((m) => m.slug === slug);
+    
+    if (!currentMakingOf || !currentMakingOf.data.title) {
+      document.getElementById("makingTitle").textContent = "Making of não encontrado";
+      document.getElementById("makingDescription").textContent = "";
+      return;
+    }
+
+    document.getElementById("makingTitle").textContent = currentMakingOf.data.title;
+    document.getElementById("makingDescription").textContent = currentMakingOf.data.description || "";
+
+    const gallery = document.getElementById("makingGallery");
+    const images = currentMakingOf.data.gallery || [];
+    
+    gallery.innerHTML = images
+      .map((item, i) => `<article class="gallery-item"><img src="${item.image}" alt="Making of ${currentMakingOf.data.title} ${i + 1}"></article>`)
+      .join("");
+
+  } catch (error) {
+    console.error("Não foi possível carregar o making of:", error);
+    document.getElementById("makingTitle").textContent = "Erro ao carregar";
+    document.getElementById("makingDescription").textContent = "Tente novamente mais tarde.";
+  }
+}
+
+function parseFrontmatter(markdown) {
+  const match = markdown.match(/^---\s*([\s\S]*?)\s*---/);
+  if (!match) return {};
+
+  const data = {};
+  let activeListKey = null;
+
+  match[1].split(/\r?\n/).forEach((line) => {
+    const listItem = line.match(/^\s*-\s+(.+)$/);
+    if (listItem && activeListKey) {
+      if (!data[activeListKey]) data[activeListKey] = [];
+      data[activeListKey].push(cleanValue(listItem[1]));
+      return;
+    }
+
+    const separator = line.indexOf(":");
+    if (separator === -1) return;
+
+    const key = line.slice(0, separator).trim();
+    const rawValue = line.slice(separator + 1).trim();
+    activeListKey = null;
+
+    if (!rawValue) {
+      data[key] = [];
+      activeListKey = key;
+    } else if (rawValue.startsWith("[") && rawValue.endsWith("]")) {
+      data[key] = rawValue
+        .slice(1, -1)
+        .split(",")
+        .map(cleanValue)
+        .filter(Boolean);
+    } else {
+      data[key] = cleanValue(rawValue);
+    }
+  });
+
+  return data;
+}
+
+function cleanValue(value) {
+  const cleaned = String(value).trim();
+  if (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    return cleaned.slice(1, -1);
+  }
+  return cleaned;
+}
+
+loadMakingOf();
