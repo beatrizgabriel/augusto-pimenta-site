@@ -1,11 +1,5 @@
 const params = new URLSearchParams(window.location.search);
-const slug = params.get("slug");
-
-// Fallback se não tiver slug
-if (!slug) {
-  window.location.href = "index.html#projetos";
-  return;
-}
+const slug = params.get("slug") || "forro-bobo";
 
 function cleanValue(value) {
   const cleaned = String(value).trim();
@@ -28,7 +22,6 @@ function parseFrontmatter(markdown) {
   match[1].split(/\r?\n/).forEach((line) => {
     const listItem = line.match(/^\s*-\s+(.+)$/);
     if (listItem && activeListKey) {
-      if (!data[activeListKey]) data[activeListKey] = [];
       data[activeListKey].push(cleanValue(listItem[1]));
       return;
     }
@@ -73,15 +66,11 @@ function makeProjectData(data) {
   const images = [];
 
   if (data.cover) {
-    images.push({
-      src: resolveAssetUrl(data.cover),
-      size: "l"
-    });
+    images.push({ src: resolveAssetUrl(data.cover), size: "l" });
   }
 
   gallery.forEach((item, index) => {
     const imagePath = typeof item === "string" ? item : item?.image;
-
     if (!imagePath) return;
 
     images.push({
@@ -96,13 +85,6 @@ function makeProjectData(data) {
     images
   };
 }
-
-  return {
-    title: data.title,
-    description: data.description || "",
-    images
-  };
-
 
 function renderProject(data) {
   document.getElementById("projectTitle").textContent = data.title;
@@ -133,7 +115,7 @@ async function loadProject() {
       return;
     }
   } catch (error) {
-    console.error("Erro ao carregar projeto:", error);
+    console.warn("Usando projeto estático de reserva:", error);
   }
 
   document.getElementById("projectTitle").textContent = "Projeto não encontrado";
