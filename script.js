@@ -398,7 +398,67 @@ async function loadCmsMakingOf() {
   }
 }
 
-Promise.all([loadCmsProjects(), loadCmsVideos(), loadCmsMakingOf()]).finally(() => {
+function createCmsEditCard(edit) {
+  const card = document.createElement("a");
+  card.className = "project-card video-card cms-edit-card";
+  card.href = edit.url || "#edicoes";
+  if (edit.url) {
+    card.target = "_blank";
+    card.rel = "noreferrer";
+  }
+
+  const image = document.createElement("img");
+  image.src = resolveAssetUrl(edit.cover);
+  image.alt = edit.title;
+
+  const overlay = document.createElement("div");
+  overlay.className = "video-overlay";
+
+  const title = document.createElement("h3");
+  title.textContent = edit.title;
+
+  overlay.appendChild(title);
+  card.appendChild(image);
+  card.appendChild(overlay);
+
+  return card;
+}
+
+async function loadCmsEditions() {
+  const track = document.getElementById("editTrack");
+  if (!track) return;
+
+  const apiUrl = "https://api.github.com/repos/beatrizgabriel/augusto-pimenta-site/contents/content/projects/edicoes?ref=main";
+
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { Accept: "application/vnd.github+json" },
+    });
+
+    if (!response.ok) throw new Error(`GitHub API respondeu ${response.status}`);
+
+    const files = await response.json();
+    const markdownFiles = files.filter(
+      (file) => file.type === "file" && file.name.toLowerCase().endsWith(".md")
+    );
+
+    const editions = await Promise.all(
+      markdownFiles.map(async (file) => {
+        const markdownResponse = await fetch(file.download_url);
+        if (!markdownResponse.ok) return null;
+        return parseFrontmatter(await markdownResponse.text());
+      })
+    );
+
+    editions
+      .filter((edit) => edit && edit.title && edit.cover)
+      .forEach((edit) => track.appendChild(createCmsEditCard(edit)));
+  } catch (error) {
+    console.error("Não foi possível carregar as edições do CMS:", error);
+  }
+}
+
+Promise.all([loadCmsProjects(), loadCmsVideos(), loadCmsEditions(), loadCmsMakingOf()]).finally(() => {
   setupCarousel("videoTrack", "videoPrev", "videoNext");
   setupCarousel("editTrack", "editPrev", "editNext");
 });
