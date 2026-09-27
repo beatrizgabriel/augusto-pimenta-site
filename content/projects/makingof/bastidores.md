@@ -10,4 +10,5 @@ gallery:
   - /images/uploads/5.heic
   - /images/uploads/6.heic
   - /images/uploads/7.heic
+  - /images/uploads/8-copia.heic
 ---
