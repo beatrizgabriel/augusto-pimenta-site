@@ -8,4 +8,6 @@ gallery:
   - /images/uploads/3.heic
   - /images/uploads/4.heic
   - /images/uploads/5.heic
+  - /images/uploads/6.heic
+  - /images/uploads/7.heic
 ---
