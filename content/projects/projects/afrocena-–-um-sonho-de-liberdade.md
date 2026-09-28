@@ -1,9 +1,7 @@
 ---
 title: AFROCENA – Um Sonho de Liberdade
 category: cultura
-description: Registro fotográfico do espetáculo Um Sonho de Liberdade,
-  acompanhando a apresentação, o elenco e os diferentes momentos da montagem
-  teatral.
+description: Registro fotográfico do espetáculo Um Sonho de Liberdade
 cover: /images/uploads/afrocena-vix-_-5-cap.jpg
 gallery:
   - /images/uploads/afrocena-vix-_-1-.jpg
