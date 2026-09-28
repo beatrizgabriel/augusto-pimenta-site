@@ -9,4 +9,6 @@ gallery:
   - /images/uploads/fotolab1-1-.jpg
   - /images/uploads/fotolab1-2-.jpg
   - /images/uploads/fotolab1-3-.jpg
+  - /images/uploads/fotolab1-4-.jpg
+  - /images/uploads/fotolab1-6-.jpg
 ---
