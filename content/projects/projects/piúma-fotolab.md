@@ -11,4 +11,7 @@ gallery:
   - /images/uploads/fotolab_horizontal1export-4.jpg
   - /images/uploads/fotolab_horizontal1export-5.jpg
   - /images/uploads/fotolab_horizontal1export-6.jpg
+  - /images/uploads/fotolab_horizontal1export-2.jpg
+  - /images/uploads/fotolab_horizontal1export-7.jpg
+  - /images/uploads/fotolab_horizontal1export.jpg
 ---
