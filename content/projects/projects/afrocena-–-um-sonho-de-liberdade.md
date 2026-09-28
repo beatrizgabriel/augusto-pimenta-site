@@ -7,11 +7,11 @@ gallery:
   - /images/uploads/afrocena-vix-_-1-.jpg
   - /images/uploads/afrocena-vix-_-2-.jpg
   - /images/uploads/afrocena-vix-_-3-.jpg
-  - /images/uploads/afrocena-vix-_-4-.jpg
-  - /images/uploads/afrocena-vix-_-6-.jpg
   - /images/uploads/afrocena-vix-_-7-.jpg
   - /images/uploads/afrocena-vix-_-8-.jpg
   - /images/uploads/afrocena-vix-_-9-.jpg
   - /images/uploads/afrocena-vix-_-10-.jpg
   - /images/uploads/afrocena-vix-_-11-.jpg
+  - /images/uploads/afrocena-vix-_-6-.jpg
+  - /images/uploads/afrocena-vix-_-4-.jpg
 ---
