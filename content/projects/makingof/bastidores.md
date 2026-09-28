@@ -13,4 +13,6 @@ gallery:
   - /images/uploads/img_1043.jpg
   - /images/uploads/img_1056.jpg
   - /images/uploads/bule_criativo_1783090154_3933162636614977240_9024892699.jpg
+  - /images/uploads/mkof-02.heic
+  - /images/uploads/mkof_03.heic
 ---
