@@ -7,4 +7,6 @@ description: Registro fotográfico documental das atividades formativas do Piúm
 cover: /images/uploads/fotolab2_horizontal-1-.jpg
 gallery:
   - /images/uploads/fotolab1-1-.jpg
+  - /images/uploads/fotolab1-2-.jpg
+  - /images/uploads/fotolab1-3-.jpg
 ---
