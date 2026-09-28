@@ -1,6 +1,7 @@
 ---
 title: " Bastidores"
-description: Fotos Trabalhando
+description: Registros do meu trabalho em diferentes produções, mostrando
+  bastidores, sets e momentos de gravação.
 cover: /images/uploads/8.heic
 gallery:
   - /images/uploads/2.heic
