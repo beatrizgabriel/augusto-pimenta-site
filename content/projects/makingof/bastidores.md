@@ -1,6 +1,6 @@
 ---
 title: " Bastidores"
-description: a
+description: Registros dos bastidores e processos de produção audiovisual.
 cover: /images/uploads/8.heic
 gallery:
   - /images/uploads/1.jpg
