@@ -1,5 +1,5 @@
 ---
-title: Aprovado Por Quem Entende | Making Of
+title: "Making Of | Aprovado Por Quem Entende  "
 description: Registro de bastidores da produção do filme “Aprovado Por Quem
   Entende”, acompanhando uma gravação planejada para ser realizada em 1h30 e
   mostrando a relação entre o storyboard e o resultado final do filme.
