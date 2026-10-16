@@ -1,5 +1,5 @@
 ---
-title: 2.Férias de Julho
+title: Férias de Julho
 description: >
   Curta-metragem produzido em 2025, com participação em diferentes etapas da
   produção, incluindo direção, roteiro, direção de fotografia, captação,
